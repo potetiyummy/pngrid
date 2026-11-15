@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "PngGridViewer (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "PngGridViewer (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="PngGridViewer.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:PngGridViewer"
+    xmlns:win2d="using:Microsoft.Graphics.Canvas.UI.Xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid x:Name="RootGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <CommandBar Grid.Row="0" DefaultLabelPosition="Right">
+            <AppBarButton Icon="OpenFile" Label="開く (Ctrl+O)" Click="OpenButton_Click" />
+            <AppBarButton Icon="Save" Label="保存 (Ctrl+S)" Click="SaveButton_Click" />
+            <AppBarButton Icon="SaveLocal" Label="名前を付けて保存" Click="SaveAsButton_Click" />
+            <AppBarSeparator />
+            <AppBarToggleButton x:Name="PencilButton" Icon="Edit" Label="鉛筆" Click="PencilButton_Click" />
+            <AppBarToggleButton x:Name="RangeFillButton" Icon="SelectAll" Label="範囲フィル" Click="RangeFillButton_Click" />
+            <AppBarSeparator />
+            <AppBarButton Icon="ZoomOut" Label="縮小 (Ctrl+-)" Click="ZoomOutButton_Click" />
+            <AppBarButton Icon="ZoomIn" Label="拡大 (Ctrl+=)" Click="ZoomInButton_Click" />
+        </CommandBar>
+
+        <Grid Grid.Row="1">
+            <!-- 画像描画用（ビューポート全体に重ねる。ScrollViewerより下に配置） -->
+            <win2d:CanvasControl x:Name="ImageCanvas" IsHitTestVisible="False" Draw="ImageCanvas_Draw" />
+
+            <ScrollViewer
+                x:Name="Viewer"
+                Background="Transparent"
+                IsTabStop="True"
+                HorizontalScrollMode="Disabled"
+                HorizontalScrollBarVisibility="Auto"
+                VerticalScrollMode="Disabled"
+                VerticalScrollBarVisibility="Auto"
+                ViewChanged="Viewer_ViewChanged">
+                <!-- スクロール範囲を作るためのスペーサー（サイズは表示倍率に合わせて変更） -->
+                <Grid x:Name="ImageHost" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Top" />
+            </ScrollViewer>
+        </Grid>
+
+        <TextBlock x:Name="StatusText" Grid.Row="2" Margin="12,4" Opacity="0.8"
+                   Text="PNG（幅・高さが16の倍数）を開いてください" />
+    </Grid>
+</Page>
